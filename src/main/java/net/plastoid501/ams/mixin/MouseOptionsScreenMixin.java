@@ -19,9 +19,9 @@ import java.util.List;
 
 @Mixin(MouseOptionsScreen.class)
 public class MouseOptionsScreenMixin {
-    @Inject(method = "init", at = @At(value = "RETURN"))
+    @Inject(method = "addOptions", at = @At(value = "RETURN"))
     private void postInit(CallbackInfo ci) {
-        ClickableWidget widget = ((MouseOptionsScreen) (Object) this).buttonList.getWidgetFor(MinecraftClient.getInstance().options.getMouseSensitivity());
+        ClickableWidget widget = ((MouseOptionsScreen) (Object) this).body.getWidgetFor(MinecraftClient.getInstance().options.getMouseSensitivity());
         if (widget == null) {
             return;
         }

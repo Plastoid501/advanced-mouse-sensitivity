@@ -46,13 +46,13 @@ public class MouseMixin {
         yhdy = this.cursorDeltaY * yh;
     }
 
-    @ModifyArgs(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SmoothUtil;smooth(DD)D", ordinal = 0))
+    @ModifyArgs(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Smoother;smooth(DD)D", ordinal = 0))
     private void modifySmoothX(Args args, @Local(ordinal = 1) double dt) {
         args.set(0, xhdx);
         args.set(1, dt * xh);
     }
 
-    @ModifyArgs(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SmoothUtil;smooth(DD)D", ordinal = 1))
+    @ModifyArgs(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Smoother;smooth(DD)D", ordinal = 1))
     private void modifySmoothY(Args args, @Local(ordinal = 1) double dt) {
         args.set(0, yhdy);
         args.set(1, dt * yh);
