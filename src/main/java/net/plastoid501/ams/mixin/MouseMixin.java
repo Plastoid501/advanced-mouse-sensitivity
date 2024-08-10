@@ -31,15 +31,15 @@ public class MouseMixin {
 
     @Shadow @Final private MinecraftClient client;
 
-    @Inject(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/GameOptions;getMouseSensitivity()Lnet/minecraft/client/option/SimpleOption;"))
+    @Inject(method = "updateMouse", at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;mouseSensitivity:D"))
     private void getCursorDelta(CallbackInfo ci) {
-        double xf = AdvancedMouseSensitivity.horizontalOption.getValue() * 0.6000000238418579 + 0.20000000298023224;
+        double xf = AdvancedMouseSensitivity.horizontalSensitivity * 0.6000000238418579 + 0.20000000298023224;
         double xg = xf * xf * xf;
         xh = xg * 8.0;
         xgdx = this.cursorDeltaX * xg;
         xhdx = this.cursorDeltaX * xh;
 
-        double yf = AdvancedMouseSensitivity.verticalOption.getValue() * 0.6000000238418579 + 0.20000000298023224;
+        double yf = AdvancedMouseSensitivity.verticalSensitivity * 0.6000000238418579 + 0.20000000298023224;
         double yg = yf * yf * yf;
         yh = yg * 8.0;
         ygdy = this.cursorDeltaY * yg;
@@ -74,9 +74,9 @@ public class MouseMixin {
         if (this.client.options.smoothCameraEnabled) {
             player.changeLookDirection(cursorDeltaX, cursorDeltaY);
         } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            player.changeLookDirection(xgdx, this.client.options.getInvertYMouse().getValue() ? -1.0 * ygdy : ygdy);
+            player.changeLookDirection(xgdx, this.client.options.invertYMouse ? -1.0 * ygdy : ygdy);
         } else {
-            player.changeLookDirection(xhdx, this.client.options.getInvertYMouse().getValue() ? -1.0 * yhdy : yhdy);
+            player.changeLookDirection(xhdx, this.client.options.invertYMouse ? -1.0 * yhdy : yhdy);
         }
     }
 
