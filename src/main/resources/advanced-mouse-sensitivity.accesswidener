@@ -3,6 +3,5 @@ accessWidener v2 named
 accessible class net/minecraft/client/option/GameOptions$Visitor
 
 accessible method net/minecraft/client/option/GameOptions getPercentValueText (Lnet/minecraft/text/Text;D)Lnet/minecraft/text/Text;
-accessible method net/minecraft/client/option/GameOptions$Visitor accept (Ljava/lang/String;Lnet/minecraft/client/option/SimpleOption;)V
 
 accessible field net/minecraft/client/gui/screen/option/MouseOptionsScreen buttonList Lnet/minecraft/client/gui/widget/OptionListWidget;
