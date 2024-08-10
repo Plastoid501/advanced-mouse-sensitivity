@@ -2,10 +2,10 @@ package net.plastoid501.ams.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.option.MouseOptionsScreen;
-import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.plastoid501.ams.AdvancedMouseSensitivity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,14 +19,15 @@ import java.util.List;
 
 @Mixin(MouseOptionsScreen.class)
 public class MouseOptionsScreenMixin {
+    private ClickableWidget widget;
+
     @Inject(method = "init", at = @At(value = "RETURN"))
     private void postInit(CallbackInfo ci) {
-        ClickableWidget widget = ((MouseOptionsScreen) (Object) this).buttonList.getWidgetFor(MinecraftClient.getInstance().options.getMouseSensitivity());
+        this.widget = ((MouseOptionsScreen) (Object) this).buttonList.getButtonFor(MinecraftClient.getInstance().options.getMouseSensitivity());
         if (widget == null) {
             return;
         }
-        widget.active = false;
-        widget.setTooltip(Tooltip.of(Text.translatable("options.mouse.button.inactive")));
+        this.widget.active = false;
     }
 
     @Inject(method = "getOptions", at = @At(value = "RETURN"), cancellable = true)
@@ -36,4 +37,12 @@ public class MouseOptionsScreenMixin {
         options.add(1, AdvancedMouseSensitivity.verticalOption);
         cir.setReturnValue(options.toArray(new SimpleOption[options.size()]));
     }
+
+    @Inject(method = "render", at = @At(value = "RETURN"))
+    private void renderTooltip(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        if (widget != null && widget.isHovered()) {
+            ((MouseOptionsScreen) (Object) this).renderOrderedTooltip(matrices, MinecraftClient.getInstance().textRenderer.wrapLines(Text.translatable("options.mouse.button.inactive"), 170), mouseX, mouseY);
+        }
+    }
+
 }
