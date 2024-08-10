@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "advanced-mouse-sensitivity",
+	"version": "${version}",
+	"name": "Advanced Mouse Sensitivity",
+	"description": "This mod adds horizontal/vertical mouse sensitivity.",
+	"authors": [
+		"Plastoid501"
+	],
+	"contact": {
+		"homepage": "https://github.com/Plastoid501/",
+		"sources": "https://github.com/Plastoid501/advanced-mouse-sensitivity"
+	},
+	"license": "MIT",
+	"icon": "assets/advanced-mouse-sensitivity/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.plastoid501.ams.AdvancedMouseSensitivity"
+		]
+	},
+	"accessWidener" : "advanced-mouse-sensitivity.accesswidener",
+	"mixins": [
+		"advanced-mouse-sensitivity.mixins.json"
+	],
+	"depends": {
+		"minecraft": ">=1.20 <=1.20.4"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
