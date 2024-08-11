@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GameOptionsMixin {
     @Inject(method = "accept", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/GameOptions$Visitor;visitDouble(Ljava/lang/String;D)D", ordinal = 0, shift = At.Shift.AFTER))
     private void addOption(GameOptions.Visitor visitor, CallbackInfo ci) {
-        AdvancedMouseSensitivity.horizontalSensitivity = visitor.visitDouble("horizontalSensitivity", AdvancedMouseSensitivity.horizontalSensitivity);
-        AdvancedMouseSensitivity.verticalSensitivity = visitor.visitDouble("verticalSensitivity", AdvancedMouseSensitivity.verticalSensitivity);
+        AdvancedMouseSensitivity.horizontalSensitivity = visitor.visitDouble("horizontalMouseSensitivity", AdvancedMouseSensitivity.horizontalSensitivity);
+        AdvancedMouseSensitivity.verticalSensitivity = visitor.visitDouble("verticalMouseSensitivity", AdvancedMouseSensitivity.verticalSensitivity);
     }
 }
