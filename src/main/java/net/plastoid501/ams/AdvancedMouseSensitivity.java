@@ -2,10 +2,11 @@ package net.plastoid501.ams;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.option.DoubleOption;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.Option;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.options.DoubleOption;
+import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.options.Option;
+import net.minecraft.text.MutableText;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +26,8 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 		horizontalSensitivity = mouseSensitivity;
 	}, (gameOptions, option) -> {
 		double d = option.getRatio(horizontalSensitivity);
-		return option.getPercentLabel(2.0 * d);
+		MutableText mutableText = option.getDisplayPrefix();
+		return mutableText.append((int)(d * 200.0) + "%");
 	});
 	public static final DoubleOption VERTICAL_SENSITIVITY = new DoubleOption("options.mouse.sensitivity.vertical", 0.0, 1.0, 0.0F, (gameOptions) -> {
 		return verticalSensitivity;
@@ -33,18 +35,19 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 		verticalSensitivity = mouseSensitivity;
 	}, (gameOptions, option) -> {
 		double d = option.getRatio(verticalSensitivity);
-		return option.getPercentLabel(2.0 * d);
+		MutableText mutableText = option.getDisplayPrefix();
+		return mutableText.append((int)(d * 200.0) + "%");
 	});
 
 	public static Option horizontalOption = new Option("options.mouse.sensitivity.horizontal") {
 		@Override
-		public ClickableWidget createButton(GameOptions options, int x, int y, int width) {
+		public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width) {
 			return HORIZONTAL_SENSITIVITY.createButton(options, x, y, width);
 		}
 	};
 	public static Option verticalOption = new Option("options.mouse.sensitivity.vertical") {
 		@Override
-		public ClickableWidget createButton(GameOptions options, int x, int y, int width) {
+		public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width) {
 			return VERTICAL_SENSITIVITY.createButton(options, x, y, width);
 		}
 	};

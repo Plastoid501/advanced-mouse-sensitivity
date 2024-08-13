@@ -1,8 +1,8 @@
 package net.plastoid501.ams.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.client.options.GameOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.plastoid501.ams.AdvancedMouseSensitivity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,8 +13,8 @@ import java.io.PrintWriter;
 
 @Mixin(GameOptions.class)
 public class GameOptionsMixin {
-    @Inject(method = "load", at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;keysAll:[Lnet/minecraft/client/option/KeyBinding;"))
-    private void setOption(CallbackInfo ci, @Local(ordinal = 0) String string, @Local(ordinal = 1) NbtCompound nbtCompound2) {
+    @Inject(method = "load", at = @At(value = "FIELD", target = "Lnet/minecraft/client/options/GameOptions;keysAll:[Lnet/minecraft/client/options/KeyBinding;"))
+    private void setOption(CallbackInfo ci, @Local(ordinal = 0) String string, @Local(ordinal = 1) CompoundTag nbtCompound2) {
         if ("horizontalMouseSensitivity".equals(string)) {
             AdvancedMouseSensitivity.horizontalSensitivity = GameOptions.parseFloat(nbtCompound2.getString(string));
         }

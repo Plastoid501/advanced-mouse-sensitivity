@@ -1,8 +1,5 @@
 accessWidener v2 named
 
-accessible method net/minecraft/client/option/GameOptions parseFloat (Ljava/lang/String;)F
-accessible method net/minecraft/client/option/Option getPercentLabel (D)Lnet/minecraft/text/Text;
-accessible method net/minecraft/client/option/Option getDisplayPrefix ()Lnet/minecraft/text/Text;
+accessible method net/minecraft/client/options/GameOptions parseFloat (Ljava/lang/String;)F
 
-accessible field net/minecraft/client/gui/screen/option/MouseOptionsScreen buttonList Lnet/minecraft/client/gui/widget/ButtonListWidget;
 accessible field net/minecraft/client/gui/widget/ButtonListWidget$ButtonEntry buttons Ljava/util/List;

@@ -31,7 +31,7 @@ public class MouseMixin {
 
     @Shadow @Final private MinecraftClient client;
 
-    @Inject(method = "updateMouse", at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;mouseSensitivity:D"))
+    @Inject(method = "updateMouse", at = @At(value = "FIELD", target = "Lnet/minecraft/client/options/GameOptions;mouseSensitivity:D"))
     private void getCursorDelta(CallbackInfo ci) {
         double xf = AdvancedMouseSensitivity.horizontalSensitivity * 0.6000000238418579 + 0.20000000298023224;
         double xg = xf * xf * xf;

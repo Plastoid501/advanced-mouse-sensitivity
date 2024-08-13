@@ -1,11 +1,10 @@
 package net.plastoid501.ams.mixin;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.option.MouseOptionsScreen;
+import net.minecraft.client.gui.screen.options.MouseOptionsScreen;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonListWidget;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.OptionButtonWidget;
-import net.minecraft.client.option.Option;
+import net.minecraft.client.options.Option;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.plastoid501.ams.AdvancedMouseSensitivity;
@@ -21,13 +20,13 @@ import java.util.stream.Collectors;
 @Mixin(MouseOptionsScreen.class)
 public class MouseOptionsScreenMixin {
     @Mutable @Shadow @Final private static Option[] OPTIONS;
-    @Shadow public ButtonListWidget buttonList;
-    @Unique private ClickableWidget widget;
+    @Shadow private ButtonListWidget buttonList;
+    @Unique private AbstractButtonWidget widget;
 
-    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/option/MouseOptionsScreen;addButton(Lnet/minecraft/client/gui/widget/ClickableWidget;)Lnet/minecraft/client/gui/widget/ClickableWidget;"))
+    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/options/MouseOptionsScreen;addButton(Lnet/minecraft/client/gui/widget/AbstractButtonWidget;)Lnet/minecraft/client/gui/widget/AbstractButtonWidget;"))
     private void postInit(CallbackInfo ci) {
         for (ButtonListWidget.ButtonEntry buttonEntry : buttonList.children()) {
-            for (ClickableWidget clickableWidget : buttonEntry.buttons) {
+            for (AbstractButtonWidget clickableWidget : buttonEntry.buttons) {
                 for (Object object : ((TranslatableText) clickableWidget.getMessage()).getArgs()) {
                     if (object instanceof TranslatableText) {
                         TranslatableText text = (TranslatableText) object;
@@ -45,7 +44,7 @@ public class MouseOptionsScreenMixin {
     @Inject(method = "render", at = @At(value = "RETURN"))
     private void renderTooltip(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.widget != null && this.widget.isHovered()) {
-            ((MouseOptionsScreen) (Object) this).renderOrderedTooltip(matrices, MinecraftClient.getInstance().textRenderer.wrapLines(new TranslatableText("options.mouse.button.inactive"), 170), mouseX, mouseY);
+            ((MouseOptionsScreen) (Object) this).renderTooltip(matrices, MinecraftClient.getInstance().textRenderer.wrapLines(new TranslatableText("options.mouse.button.inactive"), 170), mouseX, mouseY);
         }
     }
 
