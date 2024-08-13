@@ -21,9 +21,9 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public class MouseMixin {
     @Unique private double xh;
     @Unique private double yh;
-    @Unique private double xgdx;
+    //@Unique private double xgdx;
     @Unique private double xhdx;
-    @Unique private double ygdy;
+    //@Unique private double ygdy;
     @Unique private double yhdy;
 
     @Shadow private double cursorDeltaX;
@@ -36,13 +36,13 @@ public class MouseMixin {
         double xf = AdvancedMouseSensitivity.horizontalSensitivity * 0.6000000238418579 + 0.20000000298023224;
         double xg = xf * xf * xf;
         xh = xg * 8.0;
-        xgdx = this.cursorDeltaX * xg;
+        //xgdx = this.cursorDeltaX * xg;
         xhdx = this.cursorDeltaX * xh;
 
         double yf = AdvancedMouseSensitivity.verticalSensitivity * 0.6000000238418579 + 0.20000000298023224;
         double yg = yf * yf * yf;
         yh = yg * 8.0;
-        ygdy = this.cursorDeltaY * yg;
+        //ygdy = this.cursorDeltaY * yg;
         yhdy = this.cursorDeltaY * yh;
     }
 
@@ -62,8 +62,6 @@ public class MouseMixin {
     private void modifyDeltaXY(TutorialManager tutorialManager, double deltaX, double deltaY) {
         if (this.client.options.smoothCameraEnabled) {
             tutorialManager.onUpdateMouse(deltaX, deltaY);
-        } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            tutorialManager.onUpdateMouse(xgdx, ygdy);
         } else {
             tutorialManager.onUpdateMouse(xhdx, yhdy);
         }
@@ -73,8 +71,6 @@ public class MouseMixin {
     private void modifyCursorDeltaXY(ClientPlayerEntity player, double cursorDeltaX, double cursorDeltaY) {
         if (this.client.options.smoothCameraEnabled) {
             player.changeLookDirection(cursorDeltaX, cursorDeltaY);
-        } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            player.changeLookDirection(xgdx, this.client.options.invertYMouse ? -1.0 * ygdy : ygdy);
         } else {
             player.changeLookDirection(xhdx, this.client.options.invertYMouse ? -1.0 * yhdy : yhdy);
         }

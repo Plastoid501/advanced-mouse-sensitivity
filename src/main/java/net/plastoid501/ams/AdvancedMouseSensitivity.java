@@ -6,15 +6,15 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.option.DoubleOption;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.Option;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AdvancedMouseSensitivity implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MOD_ID = "advanced-mouse-sensitivity";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	public static double horizontalSensitivity = 0.5;
 	public static double verticalSensitivity = 0.5;
