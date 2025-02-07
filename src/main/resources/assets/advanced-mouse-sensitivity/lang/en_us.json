@@ -1,5 +1,7 @@
 {
   "options.mouse.sensitivity.horizontal": "Horizontal Sensitivity",
   "options.mouse.sensitivity.vertical": "Vertical Sensitivity",
+  "options.mouse.sensitivity.lockedHorizontal": "Locked Horizontal",
+  "options.mouse.sensitivity.lockedVertical": "Locked Vertical",
   "options.mouse.button.inactive" : "This option isn't active in Advanced Mouse Sensitivity."
 }
