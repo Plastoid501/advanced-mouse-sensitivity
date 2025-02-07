@@ -1,6 +1,8 @@
 package net.plastoid501.ams.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -59,24 +61,32 @@ public class MouseMixin {
     }
 
     @Redirect(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/TutorialManager;onUpdateMouse(DD)V"))
-    private void modifyDeltaXY(TutorialManager tutorialManager, double deltaX, double deltaY) {
+    private void modifyDeltaXY(TutorialManager tutorialManager, double deltaX, double deltaY, @Share("bl1") LocalBooleanRef bl1, @Share("bl2") LocalBooleanRef bl2) {
+        bl1.set(AdvancedMouseSensitivity.lockedHorizontal.getValue());
+        bl2.set(AdvancedMouseSensitivity.lockedVertical.getValue());
+        if (bl1.get() && bl2.get()) {
+            return;
+        }
         if (this.client.options.smoothCameraEnabled) {
-            tutorialManager.onUpdateMouse(deltaX, deltaY);
+            tutorialManager.onUpdateMouse(bl1.get() ? 0 : deltaX, bl2.get() ? 0 : deltaY);
         } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            tutorialManager.onUpdateMouse(xgdx, ygdy);
+            tutorialManager.onUpdateMouse(bl1.get() ? 0 : xgdx, bl2.get() ? 0 : ygdy);
         } else {
-            tutorialManager.onUpdateMouse(xhdx, yhdy);
+            tutorialManager.onUpdateMouse(bl1.get() ? 0 : xhdx, bl2.get() ? 0 : yhdy);
         }
     }
 
     @Redirect(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;changeLookDirection(DD)V"))
-    private void modifyCursorDeltaXY(ClientPlayerEntity player, double cursorDeltaX, double cursorDeltaY) {
+    private void modifyCursorDeltaXY(ClientPlayerEntity player, double cursorDeltaX, double cursorDeltaY, @Share("bl1") LocalBooleanRef bl1, @Share("bl2") LocalBooleanRef bl2) {
+        if (bl1.get() && bl2.get()) {
+            return;
+        }
         if (this.client.options.smoothCameraEnabled) {
-            player.changeLookDirection(cursorDeltaX, cursorDeltaY);
+            player.changeLookDirection(bl1.get() ? 0 : cursorDeltaX, bl2.get() ? 0 : cursorDeltaY);
         } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            player.changeLookDirection(xgdx, this.client.options.getInvertYMouse().getValue() ? -1.0 * ygdy : ygdy);
+            player.changeLookDirection(bl1.get() ? 0 : xgdx, bl2.get() ? 0 : this.client.options.getInvertYMouse().getValue() ? -1.0 * ygdy : ygdy);
         } else {
-            player.changeLookDirection(xhdx, this.client.options.getInvertYMouse().getValue() ? -1.0 * yhdy : yhdy);
+            player.changeLookDirection(bl1.get() ? 0 : xhdx, bl2.get() ? 0 : this.client.options.getInvertYMouse().getValue() ? -1.0 * yhdy : yhdy);
         }
     }
 
