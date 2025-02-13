@@ -22,11 +22,21 @@ public class GameOptionsMixin {
         if ("verticalMouseSensitivity".equals(string)) {
             AdvancedMouseSensitivity.verticalSensitivity = GameOptions.parseFloat(nbtCompound2.getString(string));
         }
+
+        if ("lockedHorizontal".equals(string)) {
+            AdvancedMouseSensitivity.lockedHorizontal = nbtCompound2.getBoolean(string);
+        }
+
+        if ("lockedVertical".equals(string)) {
+            AdvancedMouseSensitivity.lockedVertical = nbtCompound2.getBoolean(string);
+        }
     }
 
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Ljava/io/PrintWriter;println(Ljava/lang/String;)V", ordinal = 20, shift = At.Shift.AFTER))
     private void addOption(CallbackInfo ci, @Local(ordinal = 0) PrintWriter printWriter) {
         printWriter.println("horizontalMouseSensitivity:" + AdvancedMouseSensitivity.horizontalSensitivity);
         printWriter.println("verticalMouseSensitivity:" + AdvancedMouseSensitivity.verticalSensitivity);
+        printWriter.println("lockedHorizontal:" + AdvancedMouseSensitivity.lockedHorizontal);
+        printWriter.println("lockedVertical:" + AdvancedMouseSensitivity.lockedVertical);
     }
 }

@@ -3,6 +3,7 @@ package net.plastoid501.ams;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.options.BooleanOption;
 import net.minecraft.client.options.DoubleOption;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.Option;
@@ -19,6 +20,9 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 
 	public static double horizontalSensitivity = 0.5;
 	public static double verticalSensitivity = 0.5;
+
+	public static boolean lockedHorizontal = false;
+	public static boolean lockedVertical = false;
 
 	public static final DoubleOption HORIZONTAL_SENSITIVITY = new DoubleOption("options.mouse.sensitivity.horizontal", 0.0, 1.0, 0.0F, (gameOptions) -> {
 		return horizontalSensitivity;
@@ -39,6 +43,17 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 		return mutableText.append((int)(d * 200.0) + "%");
 	});
 
+	public static final BooleanOption LOCKED_HORIZONTAL = new BooleanOption(
+			"options.mouse.sensitivity.lockedHorizontal",
+			gameOptions -> lockedHorizontal,
+			(gameOptions, value) -> lockedHorizontal = value
+	);
+	public static final BooleanOption LOCKED_VERTICAL = new BooleanOption(
+			"options.mouse.sensitivity.lockedVertical",
+			gameOptions -> lockedVertical,
+			(gameOptions, value) -> lockedVertical = value
+	);
+
 	public static Option horizontalOption = new Option("options.mouse.sensitivity.horizontal") {
 		@Override
 		public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width) {
@@ -49,6 +64,19 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 		@Override
 		public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width) {
 			return VERTICAL_SENSITIVITY.createButton(options, x, y, width);
+		}
+	};
+
+	public static Option lockedHorizontalOption = new Option("options.mouse.sensitivity.lockedHorizontal") {
+		@Override
+		public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width) {
+			return LOCKED_HORIZONTAL.createButton(options, x, y, width);
+		}
+	};
+	public static Option lockedVerticalOption = new Option("options.mouse.sensitivity.lockedVertical") {
+		@Override
+		public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width) {
+			return LOCKED_VERTICAL.createButton(options, x, y, width);
 		}
 	};
 
