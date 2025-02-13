@@ -33,8 +33,10 @@ public class MouseOptionsScreenMixin {
     @Inject(method = "getOptions", at = @At(value = "RETURN"), cancellable = true)
     private static void modifyOptions(GameOptions gameOptions, CallbackInfoReturnable<SimpleOption<?>[]> cir) {
         List<SimpleOption<?>> options = new ArrayList<>(Arrays.stream(cir.getReturnValue()).toList());
-        options.add(0, AdvancedMouseSensitivity.horizontalOption);
-        options.add(1, AdvancedMouseSensitivity.verticalOption);
+        options.add(0, AdvancedMouseSensitivity.lockedHorizontal);
+        options.add(1, AdvancedMouseSensitivity.lockedVertical);
+        options.add(2, AdvancedMouseSensitivity.horizontalOption);
+        options.add(3, AdvancedMouseSensitivity.verticalOption);
         cir.setReturnValue(options.toArray(new SimpleOption[options.size()]));
     }
 
