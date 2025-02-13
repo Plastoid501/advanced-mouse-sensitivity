@@ -60,23 +60,33 @@ public class MouseMixin {
 
     @Redirect(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/TutorialManager;onUpdateMouse(DD)V"))
     private void modifyDeltaXY(TutorialManager tutorialManager, double deltaX, double deltaY) {
+        boolean bl1 = AdvancedMouseSensitivity.lockedHorizontal;
+        boolean bl2 = AdvancedMouseSensitivity.lockedVertical;
+        if (bl1 && bl2) {
+            return;
+        }
         if (this.client.options.smoothCameraEnabled) {
-            tutorialManager.onUpdateMouse(deltaX, deltaY);
+            tutorialManager.onUpdateMouse(bl1 ? 0 : deltaX, bl2 ? 0 : deltaY);
         } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            tutorialManager.onUpdateMouse(xgdx, ygdy);
+            tutorialManager.onUpdateMouse(bl1 ? 0 : xgdx, bl2 ? 0 : ygdy);
         } else {
-            tutorialManager.onUpdateMouse(xhdx, yhdy);
+            tutorialManager.onUpdateMouse(bl1 ? 0 : xhdx, bl2 ? 0 : yhdy);
         }
     }
 
     @Redirect(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;changeLookDirection(DD)V"))
     private void modifyCursorDeltaXY(ClientPlayerEntity player, double cursorDeltaX, double cursorDeltaY) {
+        boolean bl1 = AdvancedMouseSensitivity.lockedHorizontal;
+        boolean bl2 = AdvancedMouseSensitivity.lockedVertical;
+        if (bl1 && bl2) {
+            return;
+        }
         if (this.client.options.smoothCameraEnabled) {
-            player.changeLookDirection(cursorDeltaX, cursorDeltaY);
+            player.changeLookDirection(bl1 ? 0 : cursorDeltaX, bl2 ? 0 : cursorDeltaY);
         } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            player.changeLookDirection(xgdx, this.client.options.invertYMouse ? -1.0 * ygdy : ygdy);
+            player.changeLookDirection(bl1 ? 0 : xgdx, bl2 ? 0 : this.client.options.invertYMouse ? -1.0 * ygdy : ygdy);
         } else {
-            player.changeLookDirection(xhdx, this.client.options.invertYMouse ? -1.0 * yhdy : yhdy);
+            player.changeLookDirection(bl1 ? 0 : xhdx, bl2 ? 0 : this.client.options.invertYMouse ? -1.0 * yhdy : yhdy);
         }
     }
 

@@ -44,8 +44,10 @@ public class MouseOptionsScreenMixin {
     @Inject(method = "<clinit>", at = @At(value = "RETURN"))
     private static void setOption(CallbackInfo ci) {
         List<Option> options = new ArrayList<>(Arrays.stream(OPTIONS).toList());
-        options.add(0, AdvancedMouseSensitivity.horizontalOption);
-        options.add(1, AdvancedMouseSensitivity.verticalOption);
+        options.add(0, AdvancedMouseSensitivity.lockedHorizontalOption);
+        options.add(1, AdvancedMouseSensitivity.lockedVerticalOption);
+        options.add(2, AdvancedMouseSensitivity.horizontalOption);
+        options.add(3, AdvancedMouseSensitivity.verticalOption);
         OPTIONS = options.toArray(new Option[options.size()]);
     }
 
