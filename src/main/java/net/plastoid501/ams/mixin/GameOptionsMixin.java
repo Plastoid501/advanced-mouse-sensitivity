@@ -13,5 +13,7 @@ public class GameOptionsMixin {
     private void addOption(GameOptions.Visitor visitor, CallbackInfo ci) {
         visitor.accept("horizontalMouseSensitivity", AdvancedMouseSensitivity.horizontalOption);
         visitor.accept("verticalMouseSensitivity", AdvancedMouseSensitivity.verticalOption);
+        visitor.accept("lockedHorizontal", AdvancedMouseSensitivity.lockedHorizontal);
+        visitor.accept("lockedVertical", AdvancedMouseSensitivity.lockedVertical);
     }
 }
