@@ -34,6 +34,9 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 			}
 	);
 
+	public static SimpleOption<Boolean> lockedHorizontal = SimpleOption.ofBoolean("options.mouse.sensitivity.lockedHorizontal", false);
+	public static SimpleOption<Boolean> lockedVertical = SimpleOption.ofBoolean("options.mouse.sensitivity.lockedVertical", false);
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
