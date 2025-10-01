@@ -86,9 +86,9 @@ public class MouseMixin {
         if (this.client.options.smoothCameraEnabled) {
             player.changeLookDirection(bl1 ? 0 : cursorDeltaX, bl2 ? 0 : cursorDeltaY);
         } else if (this.client.options.getPerspective().isFirstPerson() && this.client.player.isUsingSpyglass()) {
-            player.changeLookDirection(bl1 ? 0 : xgdx, bl2 ? 0 : this.client.options.getInvertYMouse().getValue() ? -1.0 * ygdy : ygdy);
+            player.changeLookDirection(bl1 ? 0 : xgdx, bl2 ? 0 : this.client.options.getInvertMouseY().getValue() ? -1.0 * ygdy : ygdy);
         } else {
-            player.changeLookDirection(bl1 ? 0 : xhdx, bl2 ? 0 : this.client.options.getInvertYMouse().getValue() ? -1.0 * yhdy : yhdy);
+            player.changeLookDirection(bl1 ? 0 : xhdx, bl2 ? 0 : this.client.options.getInvertMouseY().getValue() ? -1.0 * yhdy : yhdy);
         }
     }
 
