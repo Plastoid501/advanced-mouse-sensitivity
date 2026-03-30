@@ -2,9 +2,9 @@ package net.plastoid501.ams;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.SimpleOption;
-import net.minecraft.text.Text;
+import net.minecraft.client.OptionInstance;
+import net.minecraft.client.Options;
+import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,27 +15,27 @@ public class AdvancedMouseSensitivity implements ModInitializer {
 	public static final String MOD_ID = "advanced-mouse-sensitivity";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static SimpleOption<Double> horizontalOption = new SimpleOption<>(
+	public static OptionInstance<Double> horizontalOption = new OptionInstance<>(
 			"options.mouse.sensitivity.horizontal",
-			SimpleOption.emptyTooltip(),
-			(optionText, value) -> GameOptions.getPercentValueText(Text.translatable("options.mouse.sensitivity.horizontal"), 2.0 * value),
-			SimpleOption.DoubleSliderCallbacks.INSTANCE,
+            OptionInstance.noTooltip(),
+			(optionText, value) -> Options.percentValueLabel(Component.translatable("options.mouse.sensitivity.horizontal"), 2.0 * value),
+            OptionInstance.UnitDouble.INSTANCE,
 			0.5,
 			(value) -> {
 			}
 	);
-	public static SimpleOption<Double> verticalOption = new SimpleOption<>(
+	public static OptionInstance<Double> verticalOption = new OptionInstance<>(
 			"options.mouse.sensitivity.vertical",
-			SimpleOption.emptyTooltip(),
-			(optionText, value) -> GameOptions.getPercentValueText(Text.translatable("options.mouse.sensitivity.vertical"), 2.0 * value),
-			SimpleOption.DoubleSliderCallbacks.INSTANCE,
+            OptionInstance.noTooltip(),
+			(optionText, value) -> Options.percentValueLabel(Component.translatable("options.mouse.sensitivity.vertical"), 2.0 * value),
+            OptionInstance.UnitDouble.INSTANCE,
 			0.5,
 			(value) -> {
 			}
 	);
 
-	public static SimpleOption<Boolean> lockedHorizontal = SimpleOption.ofBoolean("options.mouse.sensitivity.lockedHorizontal", false);
-	public static SimpleOption<Boolean> lockedVertical = SimpleOption.ofBoolean("options.mouse.sensitivity.lockedVertical", false);
+	public static OptionInstance<Boolean> lockedHorizontal = OptionInstance.createBoolean("options.mouse.sensitivity.lockedHorizontal", false);
+	public static OptionInstance<Boolean> lockedVertical = OptionInstance.createBoolean("options.mouse.sensitivity.lockedVertical", false);
 
 	@Override
 	public void onInitialize() {

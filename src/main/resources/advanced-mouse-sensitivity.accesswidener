@@ -1,7 +1,7 @@
-accessWidener v2 named
+accessWidener v2 official
 
-accessible class net/minecraft/client/option/GameOptions$Visitor
+accessible class net/minecraft/client/Options$FieldAccess
 
-accessible method net/minecraft/client/option/GameOptions getPercentValueText (Lnet/minecraft/text/Text;D)Lnet/minecraft/text/Text;
+accessible method net/minecraft/client/Options percentValueLabel (Lnet/minecraft/network/chat/Component;D)Lnet/minecraft/network/chat/Component;
 
-accessible field net/minecraft/client/gui/screen/option/GameOptionsScreen body Lnet/minecraft/client/gui/widget/OptionListWidget;
+accessible field net/minecraft/client/gui/screens/options/OptionsSubScreen list Lnet/minecraft/client/gui/components/OptionsList;

@@ -24,9 +24,6 @@
 		"advanced-mouse-sensitivity.mixins.json"
 	],
 	"depends": {
-		"minecraft": ">=1.21.9 <=1.21.11"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+        "minecraft": "~26.1"
+    }
 }
